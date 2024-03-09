@@ -1,0 +1,41 @@
+version: '3.2'
+
+services:
+    web:
+        container_name: ${APP_NAME}_web
+        image: nginx:latest
+        ports:
+            - ${APP_PORT}:80
+        volumes:
+            - ./:/app
+            - ./docker/8.1/nginx/default.ngx:/etc/nginx/conf.d/default.conf
+        links:
+            - php-fpm
+        networks:
+            - net_ledger
+
+    php-fpm:
+        container_name: ${APP_NAME}_app_back
+        hostname: php-fpm
+        image: php:8.2-fpm
+        volumes:
+            - ./:/app
+        networks:
+            - net_ledger
+
+    pgsql:
+        container_name: ${APP_NAME}_db_main
+        hostname: db_main
+        image: postgres:14
+        environment:
+          - POSTGRES_DB=ledger
+          - POSTGRES_USER=ledger
+          - POSTGRES_PASSWORD=ledger
+        volumes:
+          - ${DB_DATA_FILEPATH}:/var/lib/postgresql/data/
+        networks:
+            - net_ledger
+
+networks:
+    net_ledger:
+        driver: bridge

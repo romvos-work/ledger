@@ -16,3 +16,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/list', [\App\Http\Controllers\ControllerProduct::class, 'list'])
+    ->name('product.list');
+
+Route::get('/item', [\App\Http\Controllers\ControllerProduct::class, 'item'])
+    ->name('product.item');
+
+Route::get('/list/item', [\App\Http\Controllers\ControllerProduct::class, 'item'])
+    ->name('product.item');
+
+Route::get('/returns/list', [\App\Http\Controllers\ControllerProduct::class, 'apiList'])
+    ->name('product.apiList');
+
+Route::get('/api/list', [\App\Http\Controllers\ControllerProduct::class, 'apiList'])
+    ->name('product.apiList');
