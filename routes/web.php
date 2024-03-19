@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ControllerProduct;
 use Illuminate\Support\Facades\Route;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,21 +16,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/api/', function () {
     return view('welcome');
 });
 
-Route::get('/list', [\App\Http\Controllers\ControllerProduct::class, 'list'])
-    ->name('product.list');
+Route::prefix('api')->group(function () {
 
-Route::get('/item', [\App\Http\Controllers\ControllerProduct::class, 'item'])
-    ->name('product.item');
+    Route::get('/list', [ControllerProduct::class, 'list'])
+        ->name('product.list');
 
-Route::get('/list/item', [\App\Http\Controllers\ControllerProduct::class, 'item'])
-    ->name('product.item');
+    Route::get('/item', [ControllerProduct::class, 'item'])
+        ->name('product.item');
 
-Route::get('/returns/list', [\App\Http\Controllers\ControllerProduct::class, 'apiList'])
-    ->name('product.apiList');
+    Route::get('/list/item', [ControllerProduct::class, 'listitem'])
+        ->name('product.listitem');
 
-Route::get('/api/list', [\App\Http\Controllers\ControllerProduct::class, 'apiList'])
-    ->name('product.apiList');
+    Route::get('/returns/list', [ControllerProduct::class, 'apiList'])
+        ->name('product.apiList');
+});
+
+

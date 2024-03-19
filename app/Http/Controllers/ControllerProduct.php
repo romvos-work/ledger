@@ -13,21 +13,29 @@ class ControllerProduct extends Controller
         throw new \Exception('test');
 
         return new JsonResponse([
-            'fuck' => 'yeah!',
+            'ohh' => 'yeah!',
         ]);
     }
 
     public function apiList()
     {
         return new JsonResponse([
-            'fuck' => 'wtf',
+            'ohh' => 'wth',
         ]);
     }
 
     public function item()
     {
         return new JsonResponse([
-            'fuck' => 'item',
+            'ohh' => 'item',
+        ]);
+    }
+
+    public function listitem()
+    {
+        return new JsonResponse([
+            'list' => 'item',
+            'item' => 'item',
         ]);
     }
 

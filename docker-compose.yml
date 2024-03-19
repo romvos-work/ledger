@@ -9,10 +9,13 @@ services:
         volumes:
             - ./:/app
             - ./docker/8.1/nginx/default.ngx:/etc/nginx/conf.d/default.conf
-        links:
+            - ./docker/8.1/nginx/snippets:/etc/nginx/snippets
+        depends_on:
             - php-fpm
+            - pgsql
         networks:
             - net_ledger
+            - net_ledger_front
 
     php-fpm:
         container_name: ${APP_NAME}_app_back
@@ -37,5 +40,8 @@ services:
             - net_ledger
 
 networks:
+    net_ledger_front:
+        external: true
     net_ledger:
         driver: bridge
+        name: net_ledger
