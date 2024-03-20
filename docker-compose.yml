@@ -12,7 +12,7 @@ services:
             - ./docker/8.1/nginx/snippets:/etc/nginx/snippets
         depends_on:
             - php-fpm
-            - pgsql
+            - mysql
         networks:
             - net_ledger
             - net_ledger_front
@@ -20,25 +20,29 @@ services:
     php-fpm:
         container_name: ${APP_NAME}_app_back
         hostname: php-fpm
-        image: php:8.2-fpm
+        build:
+            context: ./docker/8.1
+            dockerfile: app.df
         volumes:
             - ./:/app
         networks:
             - net_ledger
 
-    pgsql:
+    mysql:
+        image: mysql:8
+        hostname: ${DB_HOST}
         container_name: ${APP_NAME}_db_main
-        hostname: db_main
-        image: postgres:14
         environment:
-          - POSTGRES_DB=ledger
-          - POSTGRES_USER=ledger
-          - POSTGRES_PASSWORD=ledger
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD_ROOT}
         volumes:
-          - ${DB_DATA_FILEPATH}:/var/lib/postgresql/data/
+            - ${DB_DATA_FILEPATH}:/var/lib/mysql
+        expose:
+            - ${DB_PORT}:3306
         networks:
             - net_ledger
-
 networks:
     net_ledger_front:
         external: true
