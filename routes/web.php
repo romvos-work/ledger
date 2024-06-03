@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\ControllerProduct;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ControllerCurrency;
 
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -33,6 +34,11 @@ Route::prefix('api')->group(function () {
 
     Route::get('/returns/list', [ControllerProduct::class, 'apiList'])
         ->name('product.apiList');
+});
+
+Route::prefix('api/currency')->group(function () {
+    Route::get('/list', [ControllerCurrency::class, 'list'])
+        ->name('currency.list');
 });
 
 
