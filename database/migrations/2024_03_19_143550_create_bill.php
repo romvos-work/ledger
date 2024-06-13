@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('bill', function (Blueprint $table) {
             $table->id();
             $table->foreignId('shopId')
+                ->nullable()
                 ->references('id')
                 ->on('shop')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete()
             ;
             $table->unsignedTinyInteger('state')->default(0);
+            $table->unsignedDouble('total')->default(0);
             $table->timestamp('createdAt')->nullable();
             $table->timestamp('updatedAt')->nullable();
             $table->timestamp('deletedAt')->nullable();

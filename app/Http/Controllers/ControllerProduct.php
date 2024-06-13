@@ -3,40 +3,27 @@
 namespace App\Http\Controllers;
 
 
-use Illuminate\Http\JsonResponse;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ControllerProduct extends Controller
 {
     public function list(Request $request)
     {
-        throw new \Exception('test');
+        $page = $request->input('page', 1);
+        $pageSize = $request->input('pageSize', 10);
 
-        return new JsonResponse([
-            'ohh' => 'yeah!',
-        ]);
+        $list = Product::all()
+            ->forPage($page, $pageSize);
+
+        return response()->json($list);
     }
 
-    public function apiList()
+    public function item(Request $request, $id)
     {
-        return new JsonResponse([
-            'ohh' => 'wth',
-        ]);
-    }
+        $product = Product::find($id);
 
-    public function item()
-    {
-        return new JsonResponse([
-            'ohh' => 'item',
-        ]);
-    }
-
-    public function listitem()
-    {
-        return new JsonResponse([
-            'list' => 'item',
-            'item' => 'item',
-        ]);
+        return response()->json($product);
     }
 
 }

@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Currency;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ControllerCurrency extends Controller
 {
-    public function list()
+    public function list(Request $request): JsonResponse
     {
-        return new JsonResponse([
-            ['id' => 1, 'name' => 'dollar'],
-            ['id' => 2, 'name' => 'ruble'],
-        ]);
+        $page = $request->input('page', 1);
+        $limit = $request->input('limit', 10);
+
+        $list = Currency::all()
+            ->forPage($page, $limit);
+
+        return response()->json($list);
     }
 }

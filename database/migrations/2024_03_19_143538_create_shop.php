@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('currencyId')
+                ->nullable()
                 ->references('id')
                 ->on('currency')
                 ->cascadeOnUpdate()
